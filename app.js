@@ -13,9 +13,21 @@ app.use(express.json());
 
 
 // Database Connection
-await mongoose.connect(mongoString, {useNewUrlParser: true}, () => 
-  console.log('connected to DB!')
-);
+// mongoose.connect(mongoString, {useNewUrlParser: true}, () => 
+//   console.log('connected to DB!')
+// );
+
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(mongoString)
+    console.log(`MongoDB Connected: ${conn.connection.host}`)
+  } 
+  catch (error) {
+    console.log(error)
+    process.exit(1)
+  }
+}
+connectDB();
 
 // App is running, port is open
 app.listen(PORT, () => console.log("Server is running ...."));
